@@ -1,4 +1,4 @@
-starter_venv/
+food_venv/
 __pycache__/
 .env
 app.db

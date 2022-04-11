@@ -3,18 +3,31 @@
 {% block content %}
     <div class="row justify-content-center mt-5">
         <div class="col-4">
-            <form method="post">
-                {{ form.csrf_token }}
-                <div class="form-group">
-                    {{ form.username.label}}
-                    {{ form.username(class="form-control", placeholder="Username") }}
+            <h2 class="text-center">Sign In</h2>
+            <div class="card p-2 shadow-lg">
+                <form method="post">
+                    {{ form.csrf_token }}
+                    <div class="form-group">
+                        <div class="icon d-flex justify-content-center my-3">
+                            <span class="fa-stack fa-2x">
+                                <i class="fas fa-circle fa-stack-2x" style="color: rgb(70, 190, 190);"></i>
+                                <i class="far fa-user fa-stack-1x text-light"></i>
+                            </span>
+                        </div>
+                        <p class="text-center mb-0">Don't have an account?</p>
+                        <p class="text-center">Register <a href="#">here.</a></p>
 
-                    {{ form.password.label }}
-                    {{ form.password(class="form-control", placeholder="Password") }}
-
-                    {{ form.submit(class="btn btn-primary mt-2") }}
-                </div>
-            </form>
+                        {{ form.username.label}}
+                        {{ form.username(class="form-control", placeholder="Username") }}
+                        
+                        {{ form.password.label }}
+                        {{ form.password(class="form-control", placeholder="Password") }}
+                        <div class="d-flex justify-content-center">
+                            {{ form.submit(class="btn btn-light border-secondary w-25 mt-2") }}
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 {% endblock content %}
