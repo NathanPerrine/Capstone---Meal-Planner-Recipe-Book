@@ -22,4 +22,7 @@ app.register_blueprint(auth)
 from app.blueprints.home import home 
 app.register_blueprint(home)
 
+from app.blueprints.food import food
+app.register_blueprint(food)
+
 from app import routes
