@@ -1,7 +1,11 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, FileField 
+from wtforms import StringField, SubmitField, FileField, FieldList, FormField
 from wtforms.validators import DataRequired
 
+
+class IngredientForm(FlaskForm):
+    amount = StringField('Amount')
+    ingredient = StringField('Ingredient')
 
 class CreateRecipeForm(FlaskForm):
     recipe_name = StringField('Recipe Name', validators=[DataRequired()])
@@ -9,8 +13,5 @@ class CreateRecipeForm(FlaskForm):
     instruction = StringField('Instructions')
     category = StringField('Category')
     cuisine = StringField('Cuisine')
+    ingredients = FieldList(FormField(IngredientForm), min_entries=0)
     submit = SubmitField('Add')
-
-class IngredientForm(FlaskForm):
-    ingredient = StringField('Ingredient')
-    amount = StringField('Amount')
