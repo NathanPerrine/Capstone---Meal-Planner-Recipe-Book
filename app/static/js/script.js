@@ -1,8 +1,16 @@
 {
     var ingCounter = 0
     
+    function setCounter(){
+        //Set the current counter to the number of children divs / 3 (3 child divs, 1 row 2 cols)
+        // ingredientSpot = document.getElementById('ingredients')
+        let ingChildren = document.getElementById('ingredients').getElementsByTagName('div').length;
+        ingCounter = (ingChildren / 3)
+    }
+
     // Function to dynamically remove ingredient forms as needed.
     function removeIngredientForm(){
+        setCounter()
         if (ingCounter > 0){
             ingCounter--
             lastRow = document.getElementById(`ing row ${ingCounter}`)
@@ -15,14 +23,7 @@
 
         // Spot to append
         ingredientSpot = document.getElementById('ingredients')
-        
-        // Get current count if forms already exist
-        //Set the current counter to the number of children divs / 3 (3 child divs, 1 row 2 cols)
-        let ingChildren = ingredientSpot.getElementsByTagName('div').length;
-        ingCounter = (ingChildren / 3)
-
-
-
+        setCounter()
 
         // Bootstrap row and columns
         const row = document.createElement('div')

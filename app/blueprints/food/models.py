@@ -32,6 +32,10 @@ class Recipe(db.Model):
             if key in {'recipe_name', 'category', 'cuisine', 'instruction', 'reference', 'time', 'makes'}:
                 setattr(self, key, value)
         db.session.commit()
+    
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
 
     def upload_to_cloudinary(self, file_to_upload):
         image_info = cloudinary.uploader.upload(file_to_upload)
@@ -54,6 +58,10 @@ class Ingredients(db.Model):
         super().__init__(**kwargs)
         db.session.add(self)
         db.session.commit()
+    
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
 
 class MyRecipes(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -63,4 +71,8 @@ class MyRecipes(db.Model):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         db.session.add(self)
+        db.session.commit()
+    
+    def delete(self):
+        db.session.delete(self)
         db.session.commit()

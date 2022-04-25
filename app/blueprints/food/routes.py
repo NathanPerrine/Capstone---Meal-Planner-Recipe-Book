@@ -98,19 +98,23 @@ def editRecipe(recipe_Id):
     recipeForm = CreateRecipeForm()
     ingredientForm = IngredientForm()
 
-    print("argh")
     if recipeForm.validate_on_submit():
-        print("test validate")
+        print("Deleting old ingredients...")
+        for ingredient in currentIngredients:
+            ingredient.delete()
+        print("Adding new ingredietns...")
         for form in recipeForm.ingredients:
-            print("iform")
             amount = form.amount.data
             ingredient = form.ingredient.data
-            print(form)
+            
+            if (amount and ingredient) or ingredient:
+                new_ingredient = Ingredients(recipe_id = recipe.id, ingredient = ingredient, amount = amount)
         
+        print("Updating recipe...")
         recipe.update(**recipeForm.data)
 
         flash(f"{recipe.recipe_name} has been updated.", "warning")
-        return render_template('editRecipe.html', title=title, recipe=recipe, recipeForm=recipeForm, ingredientForm=ingredientForm, ingredients=currentIngredients) 
+        return redirect(url_for('food.editRecipe', recipe_Id=recipe.id)) 
 
 
     return render_template('editRecipe.html', title=title, recipe=recipe, recipeForm=recipeForm, ingredientForm=ingredientForm, ingredients=currentIngredients)
