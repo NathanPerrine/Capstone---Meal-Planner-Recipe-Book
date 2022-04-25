@@ -12,8 +12,17 @@
     
     // Function to dynamically add ingredient forms as needed.
     function addIngredientForm(){
+
         // Spot to append
         ingredientSpot = document.getElementById('ingredients')
+        
+        // Get current count if forms already exist
+        //Set the current counter to the number of children divs / 3 (3 child divs, 1 row 2 cols)
+        let ingChildren = ingredientSpot.getElementsByTagName('div').length;
+        ingCounter = (ingChildren / 3)
+
+
+
 
         // Bootstrap row and columns
         const row = document.createElement('div')

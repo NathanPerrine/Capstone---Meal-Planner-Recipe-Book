@@ -15,7 +15,7 @@
             <p>{% if recipe.category %}{{recipe.category}}{% endif %} {% if recipe.cuisine %}{{recipe.cuisine}}{% endif %}</p>
             <p>{% if recipe.time %}{{recipe.time}}{% endif %} {% if recipe.makes %}{{recipe.makes}}{% endif %}</p>
             {% if refIsUrl %}
-            <a class="link-secondary" href="{{ recipe.reference }}" target="_blank" rel="noopener noreferrer">{{ recipe.reference }}</a>
+            <a class="link-info" href="{{ recipe.reference }}" target="_blank" rel="noopener noreferrer">{{ recipe.reference }}</a>
             {% else %}
             <p>{% if recipe.reference %}{{ recipe.reference }}{% endif %}</p>
             {% endif %}

@@ -91,24 +91,26 @@ def singleRecipe(recipe_Id):
 @login_required
 def editRecipe(recipe_Id):
     recipe = Recipe.query.get_or_404(recipe_Id)
+    currentIngredients = recipe.my_ingredients.all()
+
     title = f'Edit | {recipe.recipe_name}'
     
     recipeForm = CreateRecipeForm()
     ingredientForm = IngredientForm()
 
+    print("argh")
     if recipeForm.validate_on_submit():
-
-
-
+        print("test validate")
         for form in recipeForm.ingredients:
+            print("iform")
             amount = form.amount.data
             ingredient = form.ingredient.data
-            print(amount, ingredient)
+            print(form)
         
         recipe.update(**recipeForm.data)
 
         flash(f"{recipe.recipe_name} has been updated.", "warning")
-        return render_template('editRecipe.html', title=title, recipe=recipe, recipeForm=recipeForm, ingredientForm=ingredientForm) 
+        return render_template('editRecipe.html', title=title, recipe=recipe, recipeForm=recipeForm, ingredientForm=ingredientForm, ingredients=currentIngredients) 
 
 
-    return render_template('editRecipe.html', title=title, recipe=recipe, recipeForm=recipeForm, ingredientForm=ingredientForm)
+    return render_template('editRecipe.html', title=title, recipe=recipe, recipeForm=recipeForm, ingredientForm=ingredientForm, ingredients=currentIngredients)
