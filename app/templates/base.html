@@ -13,14 +13,14 @@
     <body class="bg-light" style="height: 100vh;">
         <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom border-secondary">
             <div class="container-fluid">
-                <a class="navbar-brand" href="">Food Helper</a>
+                <a class="navbar-brand" href="{{ url_for('home.index') }}">Food Helper</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
                         <a class="nav-link active" aria-current="page" href="{{ url_for('home.index') }}">Home</a>
-                        <a class="nav-link" href="#">View Recipes</a>
+                        <a class="nav-link" href="{{ url_for('food.allRecipes') }}">View Recipes</a>
                         {% if current_user.is_authenticated %}
                         <a class="nav-link" href="{{ url_for('food.createRecipe') }}">Create A Recipe</a>
                         <a class="nav-link" href="{{ url_for('food.myRecipes') }}">My Recipes</a>

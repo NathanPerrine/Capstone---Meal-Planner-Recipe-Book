@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="post" enctype="multipart/form-data" class="row">
+    <div class="col 4">
+        <div class="card mt-2">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-2">
+                        <button type="button" class="btn btn-light border-dark" id="addNewIngredientField" onClick="addIngredientForm()">+</button>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-light border-dark" id="addNewIngredientField" onClick="removeIngredientForm()">-</button>
+                    </div>
+                    <div class="col-8">
+                        <h5 class="card-title text-center">Ingredient List</h5>
+                    </div>
+                </div>
+                <div id="ingredients">
+                    {{ ingredientForm.csrf_token }}
+                    {% for i in recipeForm.ingredients %}
+                    {{ i }}
+                    {% endfor %}
+                    
+                    
+                </div>
+            </div> {# card-body #}
+        </div> {# card #}
+    </div>
+
+    <div class="col-8">
+        {{ recipeForm.csrf_token }}
+        
+        {{ recipeForm.recipe_name.label }}
+        {{ recipeForm.recipe_name(class="form-control", maxlength="50", value=recipe.recipe_name) }}
+        
+        <div class="row">
+            <div class="col-6">
+                {{ recipeForm.category.label }}
+                {{ recipeForm.category(class="form-control", maxlength="50", value=recipe.category) }}
+            </div>
+            <div class="col-6">
+                {{ recipeForm.cuisine.label }}
+                {{ recipeForm.cuisine(class="form-control", maxlength="50", value=recipe.cuisine) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                {{ recipeForm.time.label }}
+                {{ recipeForm.time(class="form-control", maxlength="35", value=recipe.time) }}
+            </div>
+            <div class="col-6">
+                {{ recipeForm.makes.label }}
+                {{ recipeForm.makes(class="form-control", maxlength="50", value=recipe.makes) }}
+            </div>
+        </div>
+
+        {{ recipeForm.reference.label }}
+        {{ recipeForm.reference(class="form-control", maxlength="100", value=recipe.reference) }}
+
+        {{ recipeForm.instruction.label }}
+        {{ recipeForm.instruction(class="form-control", maxlength="2000", value=recipe.instruction) }}
+
+        <p>Add an image:</p>
+        {{ recipeForm.image }}
+
+        {{ recipeForm.submit(class="btn btn-light border-secondary w-25 mt-2", value="Edit") }}
+    </div>
+
+
+</form>
+
+{% endblock content %}

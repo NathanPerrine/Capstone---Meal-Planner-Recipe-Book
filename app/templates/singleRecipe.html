@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12 col-sm 3">
+
+            {% for ingredient in ingredients %}
+            <p>{{ingredient.amount}} {{ ingredient.ingredient }}</p>
+            {% endfor %}
+
+        </div>
+        <div class="col-12 col-sm-9">
+            <h2>{{ recipe.recipe_name }}</h2>
+            <p>{% if recipe.category %}{{recipe.category}}{% endif %} {% if recipe.cuisine %}{{recipe.cuisine}}{% endif %}</p>
+            <p>{% if recipe.time %}{{recipe.time}}{% endif %} {% if recipe.makes %}{{recipe.makes}}{% endif %}</p>
+            {% if refIsUrl %}
+            <a class="link-secondary" href="{{ recipe.reference }}" target="_blank" rel="noopener noreferrer">{{ recipe.reference }}</a>
+            {% else %}
+            <p>{% if recipe.reference %}{{ recipe.reference }}{% endif %}</p>
+            {% endif %}
+            {% if recipe.instruction %}{% for instruction in instructions%}
+            <p>{{ instruction }}</p>
+            {% endfor %}{% endif %}
+        </div>recipe
+    </div>
+
+{% endblock content %}

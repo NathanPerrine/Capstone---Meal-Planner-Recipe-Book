@@ -13,7 +13,7 @@ class User(db.Model, UserMixin):
     email    = db.Column(db.String(50), unique = True, nullable = False)
     password = db.Column(db.String(256), nullable = False)
     date_created = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
-    # my_cart = db.relationship('Cart', backref = 'mycart', lazy='dynamic')
+    my_recipes = db.relationship('MyRecipes', backref = 'myrecipes', lazy='dynamic')
     # my_listings = db.relationship('BookList', backref='mylisting', lazy='dynamic')
 
     def __init__(self, **kwargs):

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <form method="POST" class="row">
+    <form method="post" enctype="multipart/form-data" class="row">
         <div class="col 4">
             <div class="card mt-2">
                 <div class="card-body">
@@ -34,11 +34,35 @@
             {{ recipeForm.recipe_name.label }}
             {{ recipeForm.recipe_name(class="form-control", maxlength="50", placeholder="Recipe Name") }}
             
-            {{ recipeForm.category.label }}
-            {{ recipeForm.category(class="form-control", maxlength="50", placeholder="Category (Breakfast, Lunch, Dinner, Appetizier, Side, etc.)") }}
-            
-            {{ recipeForm.cuisine.label }}
-            {{ recipeForm.cuisine(class="form-control", maxlength="50", placeholder="Cuisine (Asian, Mexican, Italian, etc.)") }}
+            <div class="row">
+                <div class="col-6">
+                    {{ recipeForm.category.label }}
+                    {{ recipeForm.category(class="form-control", maxlength="50", placeholder="Category (Breakfast, Lunch, Dinner, Appetizier, Side, etc.)") }}
+                </div>
+                <div class="col-6">
+                    {{ recipeForm.cuisine.label }}
+                    {{ recipeForm.cuisine(class="form-control", maxlength="50", placeholder="Cuisine (Asian, Mexican, Italian, etc.)") }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    {{ recipeForm.time.label }}
+                    {{ recipeForm.time(class="form-control", maxlength="35", placeholder="Time to Cook:") }}
+                </div>
+                <div class="col-6">
+                    {{ recipeForm.makes.label }}
+                    {{ recipeForm.makes(class="form-control", maxlength="50", placeholder="Makes: ") }}
+                </div>
+            </div>
+
+            {{ recipeForm.reference.label }}
+            {{ recipeForm.reference(class="form-control", maxlength="100", placeholder="Reference: (Cookbook title and page, Youtube URL, etc.)") }}
+
+            {{ recipeForm.instruction.label }}
+            {{ recipeForm.instruction(class="form-control", maxlength="2000", placeholder="Instructions:") }}
+
+            <p>Add an image:</p>
+            {{ recipeForm.image }}
 
             {{ recipeForm.submit(class="btn btn-light border-secondary w-25 mt-2") }}
         </div>
