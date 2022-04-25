@@ -7,7 +7,7 @@ from validators import url
 
 
 def test_url(test_string):
-    if url(test_string.trim()):
+    if url(test_string.strip()):
         return True 
     return False
 
