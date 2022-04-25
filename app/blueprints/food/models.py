@@ -1,3 +1,4 @@
+from flask_login import user_logged_in, user_unauthorized
 from app import db
 import os 
 import cloudinary
@@ -20,6 +21,7 @@ class Recipe(db.Model):
     reference       = db.Column(db.String(100), nullable = True)
     time            = db.Column(db.String(35), nullable = True)
     makes           = db.Column(db.String(50), nullable = True)
+    user_id         = db.Column(db.Integer, db.ForeignKey('user.id'))
     my_ingredients  = db.relationship('Ingredients', backref = 'ingredients', lazy='dynamic')
 
     def __init__(self, **kwargs):
@@ -63,16 +65,16 @@ class Ingredients(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-class MyRecipes(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+# class MyRecipes(db.Model):
+#     id = db.Column(db.Integer, primary_key = True)
+#     recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'))
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        db.session.add(self)
-        db.session.commit()
+#     def __init__(self, **kwargs):
+#         super().__init__(**kwargs)
+#         db.session.add(self)
+#         db.session.commit()
     
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
+#     def delete(self):
+#         db.session.delete(self)
+#         db.session.commit()

@@ -70,7 +70,8 @@
         {{ recipeForm.reference(class="form-control", maxlength="100", value=recipe.reference) }}
 
         {{ recipeForm.instruction.label }}
-        {{ recipeForm.instruction(class="form-control", maxlength="2000", value=recipe.instruction) }}
+        <textarea id="instruction" class="form-control" maxlength="2000" name="instruction">{{ recipe.instruction }}</textarea>
+        <!-- {{ recipeForm.instruction(class="form-control", maxlength="2000", value=recipe.instruction) }} -->
 
         <p>Add an image:</p>
         {{ recipeForm.image }}

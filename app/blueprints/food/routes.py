@@ -1,6 +1,6 @@
 from . import food
 from .forms import CreateRecipeForm, IngredientForm
-from .models import Recipe, Ingredients, MyRecipes
+from .models import Recipe, Ingredients
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 from validators import url
@@ -31,7 +31,7 @@ def createRecipe():
 
 
         # Create new recipe 
-        new_recipe = Recipe(recipe_name = recipe_title, category = recipe_category, cuisine = recipe_cuisine, instruction = instructions, time = time, makes = makes, reference = reference)
+        new_recipe = Recipe(recipe_name = recipe_title, category = recipe_category, cuisine = recipe_cuisine, instruction = instructions, time = time, makes = makes, reference = reference, user_id=current_user.id)
         # if image is present, upload to cloudinary
         if image:
             new_recipe.upload_to_cloudinary(image)
@@ -44,9 +44,9 @@ def createRecipe():
                 new_ingredient = Ingredients(recipe_id = new_recipe.id, ingredient = ingredient, amount = amount)
 
 
-        user_id = current_user.id
-        recipe_id = new_recipe.id
-        new_my_recipe = MyRecipes(recipe_id = recipe_id, user_id = user_id)
+        # user_id = current_user.id
+        # recipe_id = new_recipe.id
+        # new_my_recipe = MyRecipes(recipe_id = recipe_id, user_id = user_id)
 
         return redirect(url_for('food.myRecipes'))
 
@@ -56,8 +56,8 @@ def createRecipe():
 @login_required
 def myRecipes():
     title = "My recipes"
-    # print(current_user.my_recipes.all()[0].recipe_id)
-    recipes = [Recipe.query.filter(Recipe.id == recipe.recipe_id).all()[0] for recipe in current_user.my_recipes.all()]
+    recipes = current_user.my_recipes.all()
+    # recipes = [Recipe.query.filter(Recipe.id == recipe.recipe_id).all()[0] for recipe in current_user.author.all()]
     # print(recipes)
     # print(recipes[0].my_ingredients.all())
 
@@ -67,7 +67,6 @@ def myRecipes():
 def allRecipes():
     title = "All Recipes"
     recipes = Recipe.query.all()
-    print(recipes)
 
     return render_template('allRecipes.html', title = title, recipes = recipes)
 
@@ -80,10 +79,8 @@ def singleRecipe(recipe_Id):
     refIsUrl = ""
     if recipe.reference:
         refIsUrl = (test_url(recipe.reference))
-    print(recipe)
     # print(recipe.instruction)
     instructions = recipe.instruction.split('\n')
-    print(instructions)
 
     return render_template('singleRecipe.html', title = title, recipe = recipe, ingredients = ingredients, instructions = instructions, refIsUrl=refIsUrl)
 
@@ -98,7 +95,7 @@ def editRecipe(recipe_Id):
     recipeForm = CreateRecipeForm()
     ingredientForm = IngredientForm()
 
-    if recipeForm.validate_on_submit():
+    if recipeForm.validate_on_submit():        
         print("Deleting old ingredients...")
         for ingredient in currentIngredients:
             ingredient.delete()
@@ -112,6 +109,11 @@ def editRecipe(recipe_Id):
         
         print("Updating recipe...")
         recipe.update(**recipeForm.data)
+
+        image = recipeForm.image.data
+        if image:
+            print("Uploading image to cloudinary...")
+            recipe.upload_to_cloudinary(image)
 
         flash(f"{recipe.recipe_name} has been updated.", "warning")
         return redirect(url_for('food.editRecipe', recipe_Id=recipe.id)) 
