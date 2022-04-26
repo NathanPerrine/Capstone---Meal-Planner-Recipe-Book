@@ -43,6 +43,11 @@ class Recipe(db.Model):
         image_info = cloudinary.uploader.upload(file_to_upload)
         self.image_url = image_info.get('url')
         db.session.commit()
+    
+    def delete_from_cloudinary(self):
+        p_id = self.image_url.split('/')[-1].split('.')[0]
+        cloudinary.uploader.destroy(p_id)
+        db.session.commit()
 
     def __repr__(self):
         return f"<Recipe | {self.recipe_name}>"

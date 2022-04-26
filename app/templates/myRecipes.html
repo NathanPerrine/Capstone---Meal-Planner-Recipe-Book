@@ -19,12 +19,37 @@
                         </div>
                         <div class="row justify-content-between mx-3">
                             <a href="{{ url_for('food.editRecipe', recipe_Id=recipe.id) }}" class="btn btn-success" style="width: 50px;"><i class="fas fa-edit"></i></a>
-                            <a href="{{ url_for('home.index') }}" class="btn btn-danger" style="width: 50px;"><i class="fas fa-trash-alt"></i></a>
+                            <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"></button> -->
+                            <a href="" class="btn btn-danger" style="width: 50px;" data-bs-toggle="modal" data-bs-target="#deleteModal{{recipe.id}}"><i class="fas fa-trash-alt"></i></a>
+                            <!-- <a href="{{ url_for('food.deleteRecipe', recipe_Id=recipe.id) }}" class="btn btn-danger" style="width: 50px;"><i class="fas fa-trash-alt"></i></a> -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
+        <div class="modal fade" id="deleteModal{{ recipe.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ recipe.id }}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel{{recipe.id}}">Delete {{ recipe.recipe_name }}?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        This cannot be undone. Only delete if you are sure you no longer want this recipe.
+                        This will also delete all information associated with this recipe.
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <a href="{{ url_for('food.deleteRecipe', recipe_Id=recipe.id) }}" class="btn btn-danger" style="width: 50px;"><i class="fas fa-trash-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
         {% endfor %}
     </div>
     

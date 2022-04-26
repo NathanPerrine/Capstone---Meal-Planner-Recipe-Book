@@ -89,13 +89,16 @@ def singleRecipe(recipe_Id):
 def editRecipe(recipe_Id):
     recipe = Recipe.query.get_or_404(recipe_Id)
     currentIngredients = recipe.my_ingredients.all()
-
     title = f'Edit | {recipe.recipe_name}'
-    
     recipeForm = CreateRecipeForm()
     ingredientForm = IngredientForm()
 
-    if recipeForm.validate_on_submit():        
+    # Test if the recipe author is current user, if not redirect away from page.
+    if recipe.author != current_user:
+        flash("You do not have edit access for this recipe.", "danger")
+        return redirect(url_for('food.myRecipes'))
+
+    if recipeForm.validate_on_submit():
         print("Deleting old ingredients...")
         for ingredient in currentIngredients:
             ingredient.delete()
@@ -118,5 +121,29 @@ def editRecipe(recipe_Id):
         flash(f"{recipe.recipe_name} has been updated.", "warning")
         return redirect(url_for('food.editRecipe', recipe_Id=recipe.id)) 
 
-
     return render_template('editRecipe.html', title=title, recipe=recipe, recipeForm=recipeForm, ingredientForm=ingredientForm, ingredients=currentIngredients)
+
+@food.route('deleteRecipe/<recipe_Id>')
+@login_required
+def deleteRecipe(recipe_Id):
+    recipe = Recipe.query.get_or_404(recipe_Id)
+    ingredients = recipe.my_ingredients.all()
+
+    if recipe.author != current_user:
+        flash('You do not have access to delete this post. Goodbye.', 'danger')
+        return redirect(url_for('food.myRecipes'))
+    else:
+        # delete ingredients
+        for ingredient in ingredients:
+            print('deleting ingredient')
+            ingredient.delete()
+        # delete image from cloudinary
+        if recipe.image_url:
+            recipe.delete_from_cloudinary()
+
+        # delete recipe
+        print('deleting recipe')
+        recipe.delete()
+        flash(f'{recipe.recipe_name} has been deleted.', 'success')
+
+    return redirect(url_for('food.myRecipes'))

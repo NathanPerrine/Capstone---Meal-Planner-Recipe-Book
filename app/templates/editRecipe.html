@@ -3,7 +3,7 @@
 {% block content %}
 
 <form method="post" enctype="multipart/form-data" class="row">
-    <div class="col 4">
+    <div class="col-sm-3">
         <div class="card mt-2">
             <div class="card-body">
                 <div class="row">
@@ -39,7 +39,7 @@
         </div> {# card #}
     </div>
 
-    <div class="col-8">
+    <div class="col-sm-6">
         {{ recipeForm.csrf_token }}
         
         {{ recipeForm.recipe_name.label }}
@@ -52,31 +52,54 @@
             </div>
             <div class="col-6">
                 {{ recipeForm.cuisine.label }}
+                {% if recipe.cuisine %}
                 {{ recipeForm.cuisine(class="form-control", maxlength="50", value=recipe.cuisine) }}
+                {% else %}
+                {{ recipeForm.cuisine(class="form-control", maxlength="50", placeholder="Cuisine") }}
+                {% endif %}
             </div>
         </div>
         <div class="row">
             <div class="col-6">
                 {{ recipeForm.time.label }}
+                {% if recipe.time %}
                 {{ recipeForm.time(class="form-control", maxlength="35", value=recipe.time) }}
+                {% else %}
+                {{ recipeForm.time(class="form-control", maxlength="35", placeholder="Time to cook") }}
+                {% endif %}
             </div>
             <div class="col-6">
                 {{ recipeForm.makes.label }}
+                {% if recipe.makes %}
                 {{ recipeForm.makes(class="form-control", maxlength="50", value=recipe.makes) }}
+                {% else %}
+                {{ recipeForm.makes(class="form-control", maxlength="50", placeholder="Makes:") }}
+                {% endif %}
             </div>
         </div>
 
         {{ recipeForm.reference.label }}
+        {% if recipe.reference %}
         {{ recipeForm.reference(class="form-control", maxlength="100", value=recipe.reference) }}
+        {% else %}
+        {{ recipeForm.reference(class="form-control", maxlength="100", placeholder="Reference:") }}
+        {% endif %}
 
         {{ recipeForm.instruction.label }}
         <textarea id="instruction" class="form-control" maxlength="2000" name="instruction">{{ recipe.instruction }}</textarea>
-        <!-- {{ recipeForm.instruction(class="form-control", maxlength="2000", value=recipe.instruction) }} -->
 
         <p>Add an image:</p>
         {{ recipeForm.image }}
 
         {{ recipeForm.submit(class="btn btn-light border-secondary w-25 mt-2", value="Edit") }}
+    </div>
+    <div class="col-sm-3 d-flex flex-column mt-2">
+        {% if recipe.image_url %}
+        <img src="{{ recipe.image_url }}">
+        {% else %}
+        <img src="https://via.placeholder.com/150">
+        <p>placeholder image...</p>
+        {% endif %}
     </div>
 
 
