@@ -1,5 +1,6 @@
+from unicodedata import category
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, FileField, FieldList, FormField, TextAreaField
+from wtforms import StringField, SubmitField, FileField, FieldList, FormField, TextAreaField, SelectField
 from wtforms.validators import DataRequired
 
 
@@ -12,9 +13,10 @@ class CreateRecipeForm(FlaskForm):
     image               = FileField('Recipe Image')
     instruction         = TextAreaField('Instructions')
     category            = StringField('Category')
+    # category            = SelectField('Category', choices=[('Breakfast'), ('Lunch'), ('Dinner'), ('Appetizer'), ('Side')])
     cuisine             = StringField('Cuisine')
     ingredients         = FieldList(FormField(IngredientForm), min_entries=0)
     reference           = StringField('Reference')
     time                = StringField('Time')
     makes               = StringField('Makes')
-    submit              = SubmitField('Add')
+    submit              = SubmitField('Submit')

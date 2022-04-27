@@ -11,7 +11,6 @@ def test_url(test_string):
         return True 
     return False
 
-
 @food.route('/createRecipe', methods=['GET', 'POST'])
 @login_required
 def createRecipe():
@@ -57,9 +56,6 @@ def createRecipe():
 def myRecipes():
     title = "My recipes"
     recipes = current_user.my_recipes.all()
-    # recipes = [Recipe.query.filter(Recipe.id == recipe.recipe_id).all()[0] for recipe in current_user.author.all()]
-    # print(recipes)
-    # print(recipes[0].my_ingredients.all())
 
     return render_template('myRecipes.html', title=title, recipes=recipes)
 
@@ -99,26 +95,31 @@ def editRecipe(recipe_Id):
         return redirect(url_for('food.myRecipes'))
 
     if recipeForm.validate_on_submit():
-        print("Deleting old ingredients...")
+        # Deleting old ingredients...
         for ingredient in currentIngredients:
             ingredient.delete()
-        print("Adding new ingredietns...")
+        # "Adding new ingredietns...
         for form in recipeForm.ingredients:
             amount = form.amount.data
             ingredient = form.ingredient.data
             
             if (amount and ingredient) or ingredient:
                 new_ingredient = Ingredients(recipe_id = recipe.id, ingredient = ingredient, amount = amount)
-        
-        print("Updating recipe...")
+
+        # Updating recipe...
         recipe.update(**recipeForm.data)
 
+        # Check if an image was provided, if it was upload it
         image = recipeForm.image.data
         if image:
+            # Delete image from cloudinary if one already exists
+            if recipe.image_url:
+                recipe.delete_from_cloudinary()
+            # Upload new image
             print("Uploading image to cloudinary...")
             recipe.upload_to_cloudinary(image)
 
-        flash(f"{recipe.recipe_name} has been updated.", "warning")
+        flash(f"{recipe.recipe_name} has been updated.", "info")
         return redirect(url_for('food.editRecipe', recipe_Id=recipe.id)) 
 
     return render_template('editRecipe.html', title=title, recipe=recipe, recipeForm=recipeForm, ingredientForm=ingredientForm, ingredients=currentIngredients)
@@ -129,19 +130,20 @@ def deleteRecipe(recipe_Id):
     recipe = Recipe.query.get_or_404(recipe_Id)
     ingredients = recipe.my_ingredients.all()
 
+    # Check if recipe author is current user, if not redirect away.
     if recipe.author != current_user:
         flash('You do not have access to delete this post. Goodbye.', 'danger')
         return redirect(url_for('food.myRecipes'))
     else:
-        # delete ingredients
+        # Delete ingredients
         for ingredient in ingredients:
             print('deleting ingredient')
             ingredient.delete()
-        # delete image from cloudinary
+        # Delete image from cloudinary
         if recipe.image_url:
             recipe.delete_from_cloudinary()
 
-        # delete recipe
+        # Delete recipe
         print('deleting recipe')
         recipe.delete()
         flash(f'{recipe.recipe_name} has been deleted.', 'success')

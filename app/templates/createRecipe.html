@@ -2,7 +2,7 @@
 
 {% block content %}
     <form method="post" enctype="multipart/form-data" class="row">
-        <div class="col 4">
+        <div class="col-5">
             <div class="card mt-2">
                 <div class="card-body">
                     <div class="row">
@@ -28,7 +28,7 @@
             </div> {# card #}
         </div>
 
-        <div class="col-8">
+        <div class="card col-7 mt-2">
             {{ recipeForm.csrf_token }}
             
             {{ recipeForm.recipe_name.label }}
@@ -61,10 +61,15 @@
             {{ recipeForm.instruction.label }}
             {{ recipeForm.instruction(class="form-control", maxlength="2000", placeholder="Instructions:") }}
 
-            <p>Add an image:</p>
-            {{ recipeForm.image }}
-
-            {{ recipeForm.submit(class="btn btn-light border-secondary w-25 mt-2") }}
+            <div class="row my-2">
+                <div class="col-6 d-flex flex-column mt-2">
+                    <p class="text-center card-subtitle">Add an image:</p>
+                    {{ recipeForm.image }}
+                </div>
+                <div class="col-6 d-flex justify-content-center align-items-center">
+                    {{ recipeForm.submit(class="btn btn-light border-secondary mt-2", id="submit-button") }}
+                </div>
+            </div>
         </div>
     
     

@@ -2,15 +2,15 @@
 
 {% block content %}
 
-    <div class="row">
-        <div class="col-12 col-sm 3">
+    <div class="row mt-4">
+        <div class="card col-12 col-sm-3">
 
             {% for ingredient in ingredients %}
             <p>{{ingredient.amount}} {{ ingredient.ingredient }}</p>
             {% endfor %}
 
         </div>
-        <div class="col-12 col-sm-9">
+        <div class="card col-12 col-sm-6">
             <h2>{{ recipe.recipe_name }}</h2>
             <p>{% if recipe.category %}{{recipe.category}}{% endif %} {% if recipe.cuisine %}{{recipe.cuisine}}{% endif %}</p>
             <p>{% if recipe.time %}{{recipe.time}}{% endif %} {% if recipe.makes %}{{recipe.makes}}{% endif %}</p>
@@ -22,7 +22,12 @@
             {% if recipe.instruction %}{% for instruction in instructions%}
             <p>{{ instruction }}</p>
             {% endfor %}{% endif %}
-        </div>recipe
+        </div>
+        <div class="col-12 col-sm-3">
+            {% if recipe.image_url %}
+            <img src="{{ recipe.image_url }}" style="max-height: 75vh; max-width: 100%;">
+            {% endif %}
+        </div>
     </div>
 
 {% endblock content %}

@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, flash 
-from flask_login import login_user, logout_user, login_required 
+from flask_login import login_user, logout_user, login_required, current_user
 from . import auth 
 from .forms import SignUpForm, LogInForm 
 from .models import User
@@ -52,3 +52,15 @@ def logout():
     logout_user()
     flash("You have successfully logged out.", "success")
     return redirect(url_for('home.index'))
+
+@auth.route('/userProfile/<user_Id>')
+@login_required
+def userProfile(user_Id):
+    if int(user_Id) != current_user.id:
+        flash('You do not have access to this profile.', 'danger')
+        return redirect(url_for('home.index'))
+
+    title = f'User Profile for {current_user.username}'
+    date_created = str(current_user.date_created).split()[0]
+
+    return render_template('userProfile.html', title=title, date_created=date_created)

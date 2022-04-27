@@ -7,13 +7,13 @@
         <meta name="Description" content="Enter your description here"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-        <!-- <link rel="stylesheet" href="assets/css/style.css"> -->
-        <title>Food Helper | {{ title }}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <title>My CookBook | {{ title }}</title>
     </head>
-    <body class="bg-light" style="height: 100vh;">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom border-secondary">
+    <body style="height: 100vh;">
+        <nav class="navbar navbar-expand-lg navbar-light border-bottom border-secondary">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ url_for('home.index') }}">Food Helper</a>
+                <a class="navbar-brand" href="{{ url_for('home.index') }}">My CookBook</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -28,6 +28,7 @@
                     </div>
                     <div class="navbar-nav mx-3">
                         {% if current_user.is_authenticated %}
+                        <a class="nav-link" href="{{ url_for('auth.userProfile', user_Id=current_user.id) }}" id="user_cog"><i class="fas fa-cog"></i></a>
                         <a class="nav-link" href="{{ url_for('auth.logout') }}">Log Out</a>
                         {% else %}
                         <a class="nav-link justify-self-end" href="{{ url_for('auth.signup') }}">Sign Up</a>

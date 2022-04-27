@@ -28,7 +28,7 @@
                                 {% if loop.index == 1 %} <label for="ingredient">Ingredient</label> {% endif %}
                                 <input id="ingredients-{{loop.index -1}}-ingredient" class="form-control" type="text" name="ingredients-{{loop.index -1}}-ingredient" value="{{i.ingredient}}">
                             </div>
-                            <input id="ingredients-{{loop.index -1}}-csrf_token" name="ingredients-{{loop.index -1}}-csrf_token" type="hidden" value="{{csrf_token()}}">
+                            <input id="ingredients-{{loop.index -1}}-csrf_token" class="form-control" name="ingredients-{{loop.index -1}}-csrf_token" type="hidden" value="{{csrf_token()}}">
                         </div>
 
                     {% endfor %}
@@ -39,7 +39,7 @@
         </div> {# card #}
     </div>
 
-    <div class="col-sm-6">
+    <div class=" card col-sm-6 mt-2">
         {{ recipeForm.csrf_token }}
         
         {{ recipeForm.recipe_name.label }}
@@ -88,20 +88,21 @@
         {{ recipeForm.instruction.label }}
         <textarea id="instruction" class="form-control" maxlength="2000" name="instruction">{{ recipe.instruction }}</textarea>
 
-        <p>Add an image:</p>
-        {{ recipeForm.image }}
-
-        {{ recipeForm.submit(class="btn btn-light border-secondary w-25 mt-2", value="Edit") }}
+        <div class="row my-2">
+            <div class="col-6 d-flex flex-column mt-2">
+                <p class="text-center">Add an image:</p>
+                {{ recipeForm.image }}
+            </div>
+            <div class="col-6 d-flex justify-content-center align-items-center">
+                {{ recipeForm.submit(class="btn btn-light border-secondary mt-2", id="submit-button") }}
+            </div>
+        </div>
     </div>
-    <div class="col-sm-3 d-flex flex-column mt-2">
+    <div class="col-12 col-sm-3 mt-2">
         {% if recipe.image_url %}
-        <img src="{{ recipe.image_url }}">
-        {% else %}
-        <img src="https://via.placeholder.com/150">
-        <p>placeholder image...</p>
+        <img src="{{ recipe.image_url }}" id="edit-image" style="max-height: 75vh; max-width: 100%;">
         {% endif %}
     </div>
-
 
 </form>
 
