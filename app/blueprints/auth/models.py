@@ -21,10 +21,10 @@ class User(db.Model, UserMixin):
         super().__init__(**kwargs)
         self.password = generate_password_hash(kwargs['password'])
         db.session.add(self)
-        db.session.commit() 
+        db.session.commit()
 
     def avatar(self, size):
-        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        digest = md5(self.email.lower().strip().encode('utf-8')).hexdigest()
         return f'https://www.gravatar.com/avatar/{digest}?d=retro&s={size}'
 
     def __repr__(self):

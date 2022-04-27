@@ -10,8 +10,8 @@ def signup():
     form = SignUpForm()
 
     if form.validate_on_submit():
-        email = form.email.data 
-        username = form.username.data 
+        email = form.email.data.strip()
+        username = form.username.data.strip()
         password = form.password.data 
 
         # Check if user already exists 
@@ -34,8 +34,8 @@ def login():
     form = LogInForm()
 
     if form.validate_on_submit():
-        username = form.username.data 
-        password = form.password.data 
+        username = form.username.data.strip()
+        password = form.password.data
         #Check for a user with that name 
         user = User.query.filter(User.username.ilike(username)).first()
         if user and user.check_password(password):
