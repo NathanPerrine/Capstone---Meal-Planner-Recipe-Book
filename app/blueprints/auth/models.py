@@ -27,6 +27,10 @@ class User(db.Model, UserMixin):
         digest = md5(self.email.lower().strip().encode('utf-8')).hexdigest()
         return f'https://www.gravatar.com/avatar/{digest}?d=retro&s={size}'
 
+    def change_password(self, new_password):
+        self.password = generate_password_hash(new_password)
+        db.session.commit()
+
     def __repr__(self):
         return f"<User | {self.username}>"
     def __str__(self):

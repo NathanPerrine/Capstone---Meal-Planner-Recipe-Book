@@ -41,23 +41,24 @@
         <div class="row"> <!-- Change password card -->
             <div class="card mt-2">
                 <h5 class="card-title mt-1">Change Password</h5>
-                <form onSubmit={updatePassword}>
+                <form method="post">
+                    {{ change_pass_form.csrf_token }}
                     <div class="row">
                         <div class="col-md-6">
-                            <label htmlFor="oldpassword">Old Password</label>
-                            <input required type="password" name="oldpassword" class="form-control mt-1" placeholder="Old Password:" />
+                            {{ change_pass_form.old_password.label }}
+                            {{ change_pass_form.old_password(class="form-control", placeholder="Old Password") }}
                         </div>
                         <div class="col-md-6">
-                            <label htmlFor="newpassword">New Password</label>
-                            <input required type="password" name="newpassword" class="form-control mt-1" placeholder="New Password:" />
+                            {{ change_pass_form.new_password.label }}
+                            {{ change_pass_form.new_password(class="form-control", placeholder="New Password") }}
                         </div>
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-12">
-                            <label htmlFor="confirmPass">Confirm Password</label>
-                            <input required type="password" name="confirmPass" class="form-control mt-1" placeholder="Confirm Password: " />
+                            {{ change_pass_form.confirm_new_password.label }}
+                            {{ change_pass_form.confirm_new_password(class="form-control", placeholder="Confirm New Password") }}
                         </div>
-                        <input type="submit" class="btn btn-secondry border-secondary m-2 w-75" value="Save" />
+                        {{ change_pass_form.submit(class="btn border-secondary m-2 w-75") }}
                     </div>
                 </form>
             </div>

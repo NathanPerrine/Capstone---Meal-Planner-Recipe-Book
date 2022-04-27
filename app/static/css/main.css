@@ -37,7 +37,7 @@ body{
 
 .hero-image{
     overflow: visible;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://images.pexels.com/photos/349609/pexels-photo-349609.jpeg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/pexels_hero_image.jpeg");
 
      /* Set a specific height */
     height: 50vh;

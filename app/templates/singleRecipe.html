@@ -3,30 +3,84 @@
 {% block content %}
 
     <div class="row mt-4">
-        <div class="card col-12 col-sm-3">
-
-            {% for ingredient in ingredients %}
-            <p>{{ingredient.amount}} {{ ingredient.ingredient }}</p>
-            {% endfor %}
-
+        <div class="col-12 col-sm-3">
+            <div class="card">
+                <h2 class="card-title border-bottom">Ingredient List</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="card-text" scope="col">Amt.</th>
+                            <th class="card-text" scope="col">Ingredient</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ingredient in ingredients %}
+                        <tr>
+                            <th scope="row" class="card-text">{{ ingredient.amount }}</th>
+                            <td class="card-text">{{ ingredient.ingredient }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="card col-12 col-sm-6">
-            <h2>{{ recipe.recipe_name }}</h2>
-            <p>{% if recipe.category %}{{recipe.category}}{% endif %} {% if recipe.cuisine %}{{recipe.cuisine}}{% endif %}</p>
-            <p>{% if recipe.time %}{{recipe.time}}{% endif %} {% if recipe.makes %}{{recipe.makes}}{% endif %}</p>
-            {% if refIsUrl %}
-            <a class="link-info" href="{{ recipe.reference }}" target="_blank" rel="noopener noreferrer">{{ recipe.reference }}</a>
-            {% else %}
-            <p>{% if recipe.reference %}{{ recipe.reference }}{% endif %}</p>
-            {% endif %}
-            {% if recipe.instruction %}{% for instruction in instructions%}
-            <p>{{ instruction }}</p>
-            {% endfor %}{% endif %}
+        <div class="col-12 col-sm-6">
+            <div class="card">
+                <h2 class="card-title border-bottom">{{ recipe.recipe_name }}</h2>
+                {% if refIsUrl %}
+                <a class="link-info mb-2" href="{{ recipe.reference }}" target="_blank" rel="noopener noreferrer">{{ recipe.reference }}</a>
+                {% else %}
+                <p class="card-text">{% if recipe.reference %}{{ recipe.reference }}{% endif %}</p>
+                {% endif %}
+                {% if recipe.instruction %}
+                    <h3 class="card-title">Instructions</h3>
+                    {% for instruction in instructions%}
+                        <p class="card-text">{{ instruction }}</p>
+                        
+                    {% endfor %}
+                {% endif %}
+            </div>
         </div>
         <div class="col-12 col-sm-3">
-            {% if recipe.image_url %}
-            <img src="{{ recipe.image_url }}" style="max-height: 75vh; max-width: 100%;">
-            {% endif %}
+            <div class="col-12 mb-2">
+                <div class="card">
+                    <h2 class="card-title border-bottom">Details</h2>
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                {% if recipe.category %}
+                                <th scope="row" class="card-text">Category</th>
+                                <td class="card-text">{{recipe.category}}</th>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                                {% if recipe.cuisine %}
+                                <th scope="row" class="card-text">Cuisine</th>
+                                <td class="card-text">{{recipe.cuisine}}</th>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                                {% if recipe.time %}
+                                <th scope="row" class="card-text">Time to Cook</th>
+                                <td class="card-text">{{recipe.time}}</th>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                                {% if recipe.makes %}
+                                <th scope="row" class="card-text">Makes</th>
+                                <td class="card-text">{{recipe.makes}}</th>
+                                {% endif %}
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <div class="col-12">
+                {% if recipe.image_url %}
+                <img src="{{ recipe.image_url }}" id="edit-image" style="max-height: 75vh; max-width: 100%;">
+                {% endif %}
+            </div>
         </div>
     </div>
 

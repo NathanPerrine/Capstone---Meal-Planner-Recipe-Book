@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash 
 from flask_login import login_user, logout_user, login_required, current_user
 from . import auth 
-from .forms import SignUpForm, LogInForm 
+from .forms import SignUpForm, LogInForm, ChangePasswordForm
 from .models import User
 
 @auth.route('/signup', methods = ['GET', 'POST'])
@@ -43,7 +43,7 @@ def login():
             flash(f"{user} has successfully logged in.", "success")
             return redirect(url_for('home.index'))
         else:
-            flash("Username and/or password is incorrect.")
+            flash("Username and/or password is incorrect.", 'warning')
     return render_template('login.html', title = title, form = form)
 
 @auth.route('/logout')
@@ -53,7 +53,7 @@ def logout():
     flash("You have successfully logged out.", "success")
     return redirect(url_for('home.index'))
 
-@auth.route('/userProfile/<user_Id>')
+@auth.route('/userProfile/<user_Id>', methods=['GET', 'POST'])
 @login_required
 def userProfile(user_Id):
     if int(user_Id) != current_user.id:
@@ -62,5 +62,21 @@ def userProfile(user_Id):
 
     title = f'User Profile for {current_user.username}'
     date_created = str(current_user.date_created).split()[0]
+    change_pass_form = ChangePasswordForm()
 
-    return render_template('userProfile.html', title=title, date_created=date_created)
+    # Change password form validated
+    if change_pass_form.validate_on_submit():
+        old_password = change_pass_form.old_password.data
+        new_password = change_pass_form.new_password.data
+        confirm_new_password = change_pass_form.confirm_new_password.data
+
+        # Check if password is correct
+        if current_user.check_password(old_password):
+            current_user.change_password(confirm_new_password)
+            flash('Password has been changed.', 'success')
+
+        # print(f'Old Password: {old_password}')
+        # print(f'New password: {new_password}')
+        # print(f'Confirm New Pass: {confirm_new_password}')
+
+    return render_template('userProfile.html', title=title, date_created=date_created, change_pass_form=change_pass_form)

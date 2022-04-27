@@ -14,8 +14,8 @@
                                 <i class="far fa-user fa-stack-1x text-light"></i>
                             </span>
                         </div>
-                        <p class="text-center mb-0">Don't have an account?</p>
-                        <p class="text-center">Register <a href="{{ url_for('auth.signup') }}">here.</a></p>
+                        <p class="text-center card-text mb-0">Don't have an account?</p>
+                        <p class="text-center card-text">Register <a href="{{ url_for('auth.signup') }}">here.</a></p>
 
                         {{ form.username.label}}
                         {{ form.username(class="form-control", placeholder="Username") }}
