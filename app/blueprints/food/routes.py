@@ -149,9 +149,10 @@ def mealPlanner():
     title = "Meal Planner"
 
     plannerForm = MealPlannerForm()
-    mealPlan = [Recipe.query.filter(Recipe.id == mealPlan.recipe_id).all()[0] for mealPlan in current_user.my_mealplan.all()]
+    mealPlan = current_user.my_mealplan.all()
+    meals = [Recipe.query.filter(Recipe.id == mealPlan.recipe_id).all()[0] for mealPlan in current_user.my_mealplan.all()]
     print(mealPlan)
-
+    print(meals)
     if plannerForm.validate_on_submit():
         recipes = Recipe.query.all()
         days = plannerForm.recipeCount.data
@@ -184,4 +185,4 @@ def mealPlanner():
         return redirect(url_for('food.mealPlanner'))
 
         
-    return render_template('mealPlanner.html', title=title, plannerForm=plannerForm, mealPlan=mealPlan)
+    return render_template('mealPlanner.html', title=title, plannerForm=plannerForm)

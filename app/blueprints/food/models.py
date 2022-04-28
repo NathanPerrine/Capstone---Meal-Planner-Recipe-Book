@@ -23,7 +23,7 @@ class Recipe(db.Model):
     makes           = db.Column(db.String(50), nullable = True)
     user_id         = db.Column(db.Integer, db.ForeignKey('user.id'))
     my_ingredients  = db.relationship('Ingredients', cascade="all, delete-orphan", backref = 'ingredients', lazy='dynamic')
-    my_plans        = db.relationship('MyMealPlan', cascade="all, delete-orphan", backref= 'my_plans', lazy='dynamic')
+    my_plans        = db.relationship('MyMealPlan', cascade="all, delete-orphan", backref='my_plans', lazy='dynamic')
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
