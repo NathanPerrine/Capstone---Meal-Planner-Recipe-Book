@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="card">    
+        <h1 class="text-center card-text mb-1">Welcome to your personal meal planner</h1>
+        <p class="card-text text-center">Choose from the options below to customize your plan.</p>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-sm-3 my-2">
+            <form method="post">
+                {{ plannerForm.csrf_token }}
+                <div class="card p-2">
+                    {{ plannerForm.recipeCount.label }}
+                    {{ plannerForm.recipeCount(class="form-control", placeholder="0-7") }}
+                    
+                    {{ plannerForm.submit(class="btn btn-light border-secondary mt-2", id="submit-button") }}
+                </div>
+            </form>
+        </div>
+
+        <div class="col-12 col-sm-6 my-2">
+            <div class="card p-1">
+                <h2 class="card-title">Meal Planner</h2>
+
+                {% if not mealPlan %}
+                <p>No meal plan generated yet :(</p>
+                {% else %}
+                <p>Meal plan goes here...</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-12 col-sm-3 my-2">
+            <div class="card p-1">
+                <h2 class="card-title">Shopping List</h2>
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+{% endblock content %}
