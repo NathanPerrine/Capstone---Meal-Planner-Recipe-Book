@@ -2,7 +2,7 @@
 
 {% block content %}
     <form method="post" enctype="multipart/form-data" class="row">
-        <div class="col-5">
+        <div class="col-12 col-sm-5">
             <div class="card mt-2">
                 <div class="card-body">
                     <div class="row">
@@ -27,47 +27,48 @@
                 </div> {# card-body #}
             </div> {# card #}
         </div>
+        <div class="col-12 col-sm-7">
+            <div class="card mt-2 p-2">
+                {{ recipeForm.csrf_token }}
+                
+                {{ recipeForm.recipe_name.label }}
+                {{ recipeForm.recipe_name(class="form-control", maxlength="50", placeholder="Recipe Name") }}
+                
+                <div class="row">
+                    <div class="col-12 col-sm-6">
+                        {{ recipeForm.category.label }}
+                        {{ recipeForm.category(class="form-control", maxlength="50", placeholder="Category (Breakfast, Lunch, Dinner, Appetizier, Side, etc.)") }}
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        {{ recipeForm.cuisine.label }}
+                        {{ recipeForm.cuisine(class="form-control", maxlength="50", placeholder="Cuisine (Asian, Mexican, Italian, etc.)") }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-6">
+                        {{ recipeForm.time.label }}
+                        {{ recipeForm.time(class="form-control", maxlength="35", placeholder="Time to Cook:") }}
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        {{ recipeForm.makes.label }}
+                        {{ recipeForm.makes(class="form-control", maxlength="50", placeholder="Makes: ") }}
+                    </div>
+                </div>
 
-        <div class="card col-7 mt-2">
-            {{ recipeForm.csrf_token }}
-            
-            {{ recipeForm.recipe_name.label }}
-            {{ recipeForm.recipe_name(class="form-control", maxlength="50", placeholder="Recipe Name") }}
-            
-            <div class="row">
-                <div class="col-6">
-                    {{ recipeForm.category.label }}
-                    {{ recipeForm.category(class="form-control", maxlength="50", placeholder="Category (Breakfast, Lunch, Dinner, Appetizier, Side, etc.)") }}
-                </div>
-                <div class="col-6">
-                    {{ recipeForm.cuisine.label }}
-                    {{ recipeForm.cuisine(class="form-control", maxlength="50", placeholder="Cuisine (Asian, Mexican, Italian, etc.)") }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    {{ recipeForm.time.label }}
-                    {{ recipeForm.time(class="form-control", maxlength="35", placeholder="Time to Cook:") }}
-                </div>
-                <div class="col-6">
-                    {{ recipeForm.makes.label }}
-                    {{ recipeForm.makes(class="form-control", maxlength="50", placeholder="Makes: ") }}
-                </div>
-            </div>
+                {{ recipeForm.reference.label }}
+                {{ recipeForm.reference(class="form-control", maxlength="100", placeholder="Reference: (Cookbook title and page, Youtube URL, etc.)") }}
 
-            {{ recipeForm.reference.label }}
-            {{ recipeForm.reference(class="form-control", maxlength="100", placeholder="Reference: (Cookbook title and page, Youtube URL, etc.)") }}
+                {{ recipeForm.instruction.label }}
+                {{ recipeForm.instruction(class="form-control", maxlength="2000", placeholder="Instructions:") }}
 
-            {{ recipeForm.instruction.label }}
-            {{ recipeForm.instruction(class="form-control", maxlength="2000", placeholder="Instructions:") }}
-
-            <div class="row my-2">
-                <div class="col-6 d-flex flex-column mt-2">
-                    <p class="text-center card-subtitle">Add an image:</p>
-                    {{ recipeForm.image }}
-                </div>
-                <div class="col-6 d-flex justify-content-center align-items-center">
-                    {{ recipeForm.submit(class="btn btn-light border-secondary mt-2", id="submit-button") }}
+                <div class="row my-2">
+                    <div class="col-6 d-flex flex-column mt-2">
+                        <p class="text-center card-subtitle">Add an image:</p>
+                        {{ recipeForm.image }}
+                    </div>
+                    <div class="col-6 d-flex justify-content-center align-items-center">
+                        {{ recipeForm.submit(class="btn btn-light border-secondary mt-2", id="submit-button") }}
+                    </div>
                 </div>
             </div>
         </div>

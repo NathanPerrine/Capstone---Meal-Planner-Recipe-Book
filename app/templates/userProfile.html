@@ -3,7 +3,7 @@
 {% block content %}
 <div class="card mt-2">
     <div class="mx-2">
-        <h2 class="border-bottom mt-4 card-text">My Profile | {{current_user.username}}</h2>
+        <h2 class="border-bottom mt-4 card-text pb-2">My Profile | {{current_user.username}}</h2>
         <p class="card-text mb-1">Member since {{ date_created }}</p> 
     </div>
 </div>
@@ -58,12 +58,12 @@
                             {{ change_pass_form.confirm_new_password.label }}
                             {{ change_pass_form.confirm_new_password(class="form-control", placeholder="Confirm New Password") }}
                         </div>
-                        {{ change_pass_form.submit(class="btn border-secondary m-2 w-75") }}
+                        {{ change_pass_form.submit(class="btn btn-light border-secondary m-2 w-75") }}
                     </div>
                 </form>
             </div>
         </div>
-        <div class="row"> <!-- Delete Profile Card -->
+        <div hidden class="row"> <!-- Delete Profile Card -->
             <div class="card mt-2">
                 <h5 class="card-title mt-1 text-center">Delete Profile</h5>
                 <div class="row justify-content-center">
@@ -74,7 +74,7 @@
 
     </div> <!-- end of main column -->
 
-    <div class="card col-md-4 offset-md-1 d-flex flex-column justify-content-center p-2">
+    <div class="card col-md-4 offset-md-1 d-flex flex-column justify-content-center p-2 mt-2">
         <p class="text-center card-text">Profile Image</p>
         <img src="{{ current_user.avatar(128) }}" class="image-fluid" />
         <button disabled hidden class="btn btn-light w-100 mt-2">Upload Picture</button>

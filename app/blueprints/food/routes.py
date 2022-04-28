@@ -1,9 +1,11 @@
 from . import food
-from .forms import CreateRecipeForm, IngredientForm
-from .models import Recipe, Ingredients
+from .forms import CreateRecipeForm, IngredientForm, MealPlannerForm
+from .models import Recipe, Ingredients, MyMealPlan
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 from validators import url
+import random
+from app import db
 
 
 def test_url(test_string):
@@ -135,17 +137,51 @@ def deleteRecipe(recipe_Id):
         flash('You do not have access to delete this post. Goodbye.', 'danger')
         return redirect(url_for('food.myRecipes'))
     else:
-        # Delete ingredients
-        for ingredient in ingredients:
-            print('deleting ingredient')
-            ingredient.delete()
-        # Delete image from cloudinary
-        if recipe.image_url:
-            recipe.delete_from_cloudinary()
-
         # Delete recipe
-        print('deleting recipe')
         recipe.delete()
         flash(f'{recipe.recipe_name} has been deleted.', 'success')
 
     return redirect(url_for('food.myRecipes'))
+
+@food.route('mealPlanner', methods=['GET', 'POST'])
+@login_required
+def mealPlanner():
+    title = "Meal Planner"
+
+    plannerForm = MealPlannerForm()
+    mealPlan = [Recipe.query.filter(Recipe.id == mealPlan.recipe_id).all()[0] for mealPlan in current_user.my_mealplan.all()]
+    print(mealPlan)
+
+    if plannerForm.validate_on_submit():
+        recipes = Recipe.query.all()
+        days = plannerForm.recipeCount.data
+        
+        try:
+            days = int(days)
+        except ValueError:
+            flash('Numbers 0-7 only please.', 'warning')
+            return redirect(url_for('food.mealPlanner'))
+
+        if days < 0 or days > 7:
+            flash("Please choose a number 0 to 7.", 'warning')
+            return redirect(url_for('food.mealPlanner'))
+
+        if days > len(recipes):
+            flash("Sorry, we don't have that many recipes yet :(", 'warning')
+            return redirect(url_for('food.mealPlanner'))
+        
+        # Delete current meal plan if all tests pass.
+        for plan in mealPlan:
+            print('deleting')
+            plan.delete()
+
+        # Generate new meal plan.
+        meals = random.sample(recipes, days)
+        for meal in meals:
+            newMealPlan = MyMealPlan(recipe_id = meal.id, user_id = current_user.id)
+
+        flash('Meal Plan Created!', 'success')
+        return redirect(url_for('food.mealPlanner'))
+
+        
+    return render_template('mealPlanner.html', title=title, plannerForm=plannerForm, mealPlan=mealPlan)

@@ -22,7 +22,8 @@ class Recipe(db.Model):
     time            = db.Column(db.String(35), nullable = True)
     makes           = db.Column(db.String(50), nullable = True)
     user_id         = db.Column(db.Integer, db.ForeignKey('user.id'))
-    my_ingredients  = db.relationship('Ingredients', backref = 'ingredients', lazy='dynamic')
+    my_ingredients  = db.relationship('Ingredients', cascade="all, delete-orphan", backref = 'ingredients', lazy='dynamic')
+    my_plans        = db.relationship('MyMealPlan', cascade="all, delete-orphan", backref= 'my_plans', lazy='dynamic')
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -36,6 +37,8 @@ class Recipe(db.Model):
         db.session.commit()
     
     def delete(self):
+        if self.image_url:
+            self.delete_from_cloudinary()
         db.session.delete(self)
         db.session.commit()
 
@@ -70,16 +73,16 @@ class Ingredients(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-# class MyRecipes(db.Model):
-#     id = db.Column(db.Integer, primary_key = True)
-#     recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'))
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+class MyMealPlan(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-#     def __init__(self, **kwargs):
-#         super().__init__(**kwargs)
-#         db.session.add(self)
-#         db.session.commit()
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        db.session.add(self)
+        db.session.commit()
     
-#     def delete(self):
-#         db.session.delete(self)
-#         db.session.commit()
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()

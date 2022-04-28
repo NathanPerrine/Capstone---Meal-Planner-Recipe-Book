@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
         <title>My CookBook | {{ title }}</title>
     </head>
-    <body style="height: 100vh;">
+    <body>
         <nav class="navbar navbar-expand-lg navbar-light border-bottom border-secondary">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url_for('home.index') }}">My CookBook</a>
@@ -24,6 +24,7 @@
                         {% if current_user.is_authenticated %}
                         <a class="nav-link" href="{{ url_for('food.createRecipe') }}">Create A Recipe</a>
                         <a class="nav-link" href="{{ url_for('food.myRecipes') }}">My Recipes</a>
+                        <a class="nav-link" href="{{ url_for('food.mealPlanner') }}">Meal Planner</a>
                         {% endif %}
                     </div>
                     <div class="navbar-nav mx-3">
@@ -42,7 +43,7 @@
         {% block hero %}
         
         {% endblock hero %}
-        
+
         <div class="container">
             {% include 'alert_message.html' %}
             {% block content %}
