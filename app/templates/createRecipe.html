@@ -7,10 +7,14 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-2">
-                            <button type="button" class="btn btn-light border-dark" id="addNewIngredientField" onClick="addIngredientForm()">+</button>
+                            <button type="button" class="btn btn-light border-dark" id="addNewIngredientField" onClick="addIngredientForm()">
+                                <i class="fas fa-plus"></i>
+                            </button>
                         </div>
                         <div class="col-2">
-                            <button type="button" class="btn btn-light border-dark" id="addNewIngredientField" onClick="removeIngredientForm()">-</button>
+                            <button type="button" class="btn btn-light border-dark" id="addNewIngredientField" onClick="removeIngredientForm()">
+                                <i class="fas fa-minus"></i>
+                            </button>
                         </div>
                         <div class="col-8">
                             <h5 class="card-title text-center">Ingredient List</h5>
@@ -67,7 +71,7 @@
                         {{ recipeForm.image }}
                     </div>
                     <div class="col-6 d-flex justify-content-center align-items-center">
-                        {{ recipeForm.submit(class="btn btn-light border-secondary mt-2", id="submit-button") }}
+                        {{ recipeForm.submit(class="btn btn-light border-secondary mt-2") }}
                     </div>
                 </div>
             </div>

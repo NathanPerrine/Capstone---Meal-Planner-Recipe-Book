@@ -151,8 +151,9 @@ def mealPlanner():
     plannerForm = MealPlannerForm()
     mealPlan = current_user.my_mealplan.all()
     meals = [Recipe.query.filter(Recipe.id == mealPlan.recipe_id).all()[0] for mealPlan in current_user.my_mealplan.all()]
-    print(mealPlan)
-    print(meals)
+
+    recipe_ingredients = [meal.my_ingredients.all() for meal in meals]
+    
     if plannerForm.validate_on_submit():
         recipes = Recipe.query.all()
         days = plannerForm.recipeCount.data
@@ -173,7 +174,6 @@ def mealPlanner():
         
         # Delete current meal plan if all tests pass.
         for plan in mealPlan:
-            print('deleting')
             plan.delete()
 
         # Generate new meal plan.
@@ -185,4 +185,4 @@ def mealPlanner():
         return redirect(url_for('food.mealPlanner'))
 
         
-    return render_template('mealPlanner.html', title=title, plannerForm=plannerForm)
+    return render_template('mealPlanner.html', title=title, plannerForm=plannerForm, meals=meals, recipe_ingredients=recipe_ingredients)

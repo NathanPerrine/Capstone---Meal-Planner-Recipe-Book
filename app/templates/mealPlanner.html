@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="card">    
+    <div class="card mt-1">    
         <h1 class="text-center card-text mb-1">Welcome to your personal meal planner</h1>
         <p class="card-text text-center">Choose from the options below to customize your plan.</p>
     </div>
@@ -20,21 +20,41 @@
         </div>
 
         <div class="col-12 col-sm-6 my-2">
-            <div class="card p-1">
-                <h2 class="card-title">Meal Planner</h2>
-
-                {% if not mealPlan %}
-                <p>No meal plan generated yet :(</p>
-                {% else %}
-                <p>Meal plan goes here...</p>
-                {% endif %}
+            <div class="card p-2">
+                <h2 class="card-title border-bottom">Meal Planner</h2>
             </div>
+            {% if not meals %}
+                <p class="card-text">No meal plan generated yet :(</p>
+            {% else %}
+                {% for meal in meals %}
+                    <div class="card my-2 p-2">
+                        <h3 class="card-title">{{ meal.recipe_name }}</h3>
+
+                        <a href="{{ url_for('food.singleRecipe', recipe_Id = meal.id)}}" class="stretched-link card-link">View More</a>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="col-12 col-sm-3 my-2">
-            <div class="card p-1">
+            <div class="card p-2">
                 <h2 class="card-title">Shopping List</h2>
-
             </div>
+            {% for ingredient_list in recipe_ingredients %}
+            <div class="card p-2 mt-2">
+                <h6 class="card-title text-center">{{ meals[loop.index -1] }}</h6>
+                <table class="table table-striped">
+                    {% for ingredient in ingredient_list %}
+                    <tbody>
+                            <tr class="shopping-list" onClick="this.classList.toggle('done')">
+                                <th scope="row" class="card-text">{{ ingredient.amount }}</th>
+                                <td class="card-text">{{ ingredient.ingredient }}</td>
+                            </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+            {% endfor %}
+
         </div>
 
 

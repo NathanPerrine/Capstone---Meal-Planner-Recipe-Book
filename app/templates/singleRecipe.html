@@ -2,9 +2,9 @@
 
 {% block content %}
 
-    <div class="row mt-4">
-        <div class="col-12 col-sm-3">
-            <div class="card">
+    <div class="row mt-3">
+        <div class="col-12 order-sm-1 col-sm-3 mt-2">
+            <div class="card p-2">
                 <h2 class="card-title border-bottom text-center">Ingredient List</h2>
                 <table class="table table-striped">
                     <thead>
@@ -24,9 +24,9 @@
                 </table>
             </div>
         </div>
-        <div class="col-12 col-sm-6">
-            <div class="card">
-                <h2 class="card-title border-bottom">{{ recipe.recipe_name }}</h2>
+        <div class="col-12 order-first order-sm-2 col-sm-6 mt-2">
+            <div class="card p-2">
+                <h2 class="card-title text-center border-bottom">{{ recipe.recipe_name }}</h2>
                 {% if refIsUrl %}
                 <a class="link-info mb-2" href="{{ recipe.reference }}" target="_blank" rel="noopener noreferrer">{{ recipe.reference }}</a>
                 {% else %}
@@ -41,10 +41,10 @@
                 {% endif %}
             </div>
         </div>
-        <div class="col-12 col-sm-3">
+        <div class="col-12 order-1 order-sm-3 col-sm-3 mt-2">
             <div class="col-12 mb-2">
-                <div class="card">
-                    <h2 class="card-title border-bottom">Details</h2>
+                <div class="card p-2">
+                    <h2 class="card-title text-center border-bottom">Details</h2>
                     <table class="table table-striped">
                         <tbody>
                             <tr>

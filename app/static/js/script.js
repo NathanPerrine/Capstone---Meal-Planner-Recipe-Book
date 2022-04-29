@@ -86,8 +86,5 @@
         ingredientSpot.append(row)
         // Increment ingCounter
         ingCounter ++
-
     }
-
-
 }

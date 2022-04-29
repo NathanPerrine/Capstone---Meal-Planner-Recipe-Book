@@ -119,3 +119,15 @@ label{
 .fa-circle{
     color: rgb(70, 190, 190);
 }
+
+#addNewIngredientField{
+    width: auto;
+    min-width: 40px;
+}
+
+.shopping-list{
+    list-style-type: none;
+}
+.shopping-list.done{
+    background: #4085c5;
+}
