@@ -47,30 +47,36 @@
                     <h2 class="card-title text-center border-bottom">Details</h2>
                     <table class="table table-striped">
                         <tbody>
-                            <tr>
-                                {% if recipe.category %}
-                                <th scope="row" class="card-text">Category</th>
-                                <td class="card-text">{{recipe.category}}</th>
-                                {% endif %}
-                            </tr>
-                            <tr>
-                                {% if recipe.cuisine %}
-                                <th scope="row" class="card-text">Cuisine</th>
-                                <td class="card-text">{{recipe.cuisine}}</th>
-                                {% endif %}
-                            </tr>
-                            <tr>
-                                {% if recipe.time %}
-                                <th scope="row" class="card-text">Time to Cook</th>
-                                <td class="card-text">{{recipe.time}}</th>
-                                {% endif %}
-                            </tr>
-                            <tr>
-                                {% if recipe.makes %}
-                                <th scope="row" class="card-text">Makes</th>
-                                <td class="card-text">{{recipe.makes}}</th>
-                                {% endif %}
-                            </tr>
+                            {% if recipe.author %}
+                                <tr>
+                                    <th scope="row" class="card-text">Author</th>
+                                    <td class="card-text">{{ recipe.author }}</td>
+                                </tr>
+                            {% endif %}
+                            {% if recipe.category %}
+                                <tr>
+                                    <th scope="row" class="card-text">Category</th>
+                                    <td class="card-text">{{recipe.category}}</th>
+                                </tr>
+                            {% endif %}
+                            {% if recipe.cuisine %}
+                                <tr>
+                                    <th scope="row" class="card-text">Cuisine</th>
+                                    <td class="card-text">{{recipe.cuisine}}</th>
+                                </tr>
+                            {% endif %}
+                            {% if recipe.time %}
+                                <tr>
+                                    <th scope="row" class="card-text">Time to Cook</th>
+                                    <td class="card-text">{{recipe.time}}</th>
+                                </tr>
+                            {% endif %}
+                            {% if recipe.makes %}
+                                <tr>
+                                    <th scope="row" class="card-text">Makes</th>
+                                    <td class="card-text">{{recipe.makes}}</th>
+                                </tr>
+                            {% endif %}
                         </tbody>
                     </table>
 
