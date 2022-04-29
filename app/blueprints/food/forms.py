@@ -24,3 +24,4 @@ class MealPlannerForm(FlaskForm):
     recipeCount = StringField('Recipe Count', validators=[DataRequired()])
     dinnersOnly = BooleanField('Dinner Only', default=True)
     submit      = SubmitField('Submit')
+
