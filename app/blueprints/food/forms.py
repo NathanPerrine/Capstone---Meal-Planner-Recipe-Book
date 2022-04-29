@@ -25,3 +25,6 @@ class MealPlannerForm(FlaskForm):
     dinnersOnly = BooleanField('Dinner Only', default=True)
     submit      = SubmitField('Submit')
 
+class SearchForm(FlaskForm):
+    search = StringField('Search', validators=[DataRequired()])
+    submit = SubmitField('Search')

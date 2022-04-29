@@ -1,5 +1,5 @@
 from . import food
-from .forms import CreateRecipeForm, IngredientForm, MealPlannerForm
+from .forms import CreateRecipeForm, IngredientForm, MealPlannerForm, SearchForm
 from .models import Recipe, Ingredients, MyMealPlan
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
@@ -61,12 +61,17 @@ def myRecipes():
 
     return render_template('myRecipes.html', title=title, recipes=recipes)
 
-@food.route('allRecipes')
+@food.route('allRecipes', methods=['GET', 'POST'])
 def allRecipes():
     title = "All Recipes"
     recipes = Recipe.query.all()
+    searchForm = SearchForm()
 
-    return render_template('allRecipes.html', title = title, recipes = recipes)
+    if searchForm.validate_on_submit():
+        searchTerm = searchForm.search.data
+        recipes = Recipe.query.filter( (Recipe.recipe_name.ilike(f'%{searchTerm}%')) | (Recipe.category.ilike(f'%{searchTerm}%')) | (Recipe.cuisine.ilike(f'%{searchTerm}%')) ).all()
+
+    return render_template('allRecipes.html', title = title, recipes = recipes, searchForm = searchForm)
 
 @food.route('singleRecipe/<recipe_Id>')
 @login_required 
