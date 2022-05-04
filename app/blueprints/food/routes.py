@@ -191,3 +191,11 @@ def mealPlanner():
 
         
     return render_template('mealPlanner.html', title=title, plannerForm=plannerForm, meals=meals, recipe_ingredients=recipe_ingredients)
+
+
+@food.route('/pantry', methods=['GET', 'POST'])
+@login_required
+def pantry():
+    title = "Pantry"
+
+    return render_template('pantry.html', title=title)
