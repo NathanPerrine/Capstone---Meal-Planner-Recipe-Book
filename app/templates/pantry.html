@@ -2,6 +2,35 @@
 
 {% block content %}
 
-    Pantry....
+    <div class="card mt-1">    
+        <h1 class="text-center card-text mb-1">Welcome to your virtual pantry</h1>
+        <p class="card-text text-center mb-0">Add items that you like to keep a stock of, such as canned goods or pasta noodles.</p>
+        <p class="card-text text-center">(Make sure you submit at the bottom to save your changes!)</p>
+    </div>
 
-{% endblock content %}
+    <div class="row">
+
+        <div class="col-12 col-sm-5 my-2">
+            <form method="post">
+                <div class="card p-2">
+                    <p class="card-text">Enter pantry item here</p>
+                </div>
+            </form>
+
+
+
+        </div>
+        <div class="col-12 col-sm-7 my-2">
+            <div class="card p-2">
+                <p class="card-text">Pantry items go here</p>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+
+
+    {% endblock content %}

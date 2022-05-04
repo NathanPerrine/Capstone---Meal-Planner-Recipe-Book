@@ -1,4 +1,3 @@
-from unicodedata import category
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, FileField, FieldList, FormField, TextAreaField, BooleanField
 from wtforms.validators import DataRequired
@@ -28,3 +27,7 @@ class MealPlannerForm(FlaskForm):
 class SearchForm(FlaskForm):
     search = StringField('Search', validators=[DataRequired()])
     submit = SubmitField('Search')
+
+class PantryForm(FlaskForm):
+    pantryItem = StringField('Pantry Item', validators=[DataRequired()])
+    pantryAmount = StringField('Amount')

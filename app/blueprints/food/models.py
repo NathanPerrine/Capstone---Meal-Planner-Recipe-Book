@@ -86,3 +86,14 @@ class MyMealPlan(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+
+class MyPantry(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    pantryItem = db.Column(db.String(50), nullable = False)
+    pantryAmount = db.Column(db.Integer)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        db.session.add(self)
+        db.session.commit
