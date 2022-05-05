@@ -88,3 +88,80 @@
         ingCounter ++
     }
 }
+{
+    pantryCounter = 0;
+    function addPantryForm(){
+        // Spot to append
+        pantrySpot = document.getElementById('pantryItemForms');
+        // setCounter()
+
+        // Bootstrap row and columns
+        const row = document.createElement('div')
+        row.className = `row mt-1 pantryItem-${pantryCounter}`
+        row.id = `pantryItem row ${pantryCounter}`
+        const amtDiv = document.createElement('div')
+        amtDiv.className = "col-4"
+        const ingDiv = document.createElement('div')
+        ingDiv.className = "col-8"
+
+        // Labels
+        // Only apply the labels on the first button press
+        if (pantryCounter === 0){
+            const ingredientLabel = document.createElement('label')
+            ingredientLabel.for = "intredient"
+            ingredientLabel.innerHTML = "Item"
+
+            const amountLabel = document.createElement('label')
+            amountLabel.for = "amount"
+            amountLabel.innerHTML = "Amt"
+
+            // Add labels to divs
+            amtDiv.append(amountLabel)
+            ingDiv.append(ingredientLabel)
+        }
+
+        const ingredientInput = document.createElement('input')
+        ingredientInput.type = "text"
+        ingredientInput.className = "form-control"
+        ingredientInput.id = `pantryItem-${pantryCounter}-ingredient`
+        ingredientInput.name = `pantryItem-${pantryCounter}-ingredient`
+        ingredientInput.placeholder = "Ingredient"
+
+        // Amounts
+        
+        const amountInput = document.createElement('input')
+        amountInput.type = "text"
+        amountInput.className = "form-control"
+        amountInput.id = `pantryItem-${pantryCounter}-amount`
+        amountInput.name = `pantryItem-${pantryCounter}-amount`
+        amountInput.placeholder = "Amt."
+
+        //Token
+        const csrf = document.getElementById('csrf_token')
+        const token = document.createElement('input')
+        token.id = `pantryItem-${pantryCounter}-csrf_token`
+        token.name = `pantryItem-${pantryCounter}-csrf_token`
+        token.type = 'hidden'
+        token.value = csrf.value
+
+
+        // Add inputs to Divs
+        amtDiv.append(amountInput)
+        ingDiv.append(ingredientInput)
+        // Add divs/cols to Row
+        row.append(amtDiv)
+        row.append(ingDiv)
+        row.append(token)
+        // add Row to ingredientSpot
+        pantrySpot.append(row)
+        // Increment ingCounter
+        pantryCounter ++
+
+
+    };
+
+    function removePantryForm(){
+
+    };
+
+}

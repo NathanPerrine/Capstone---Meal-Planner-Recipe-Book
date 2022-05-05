@@ -29,5 +29,5 @@ class SearchForm(FlaskForm):
     submit = SubmitField('Search')
 
 class PantryForm(FlaskForm):
-    pantryItem = StringField('Pantry Item', validators=[DataRequired()])
-    pantryAmount = StringField('Amount')
+    pantryItem = FieldList(FormField(IngredientForm), min_entries=0)
+    submit = SubmitField('Submit')

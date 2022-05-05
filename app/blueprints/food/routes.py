@@ -1,5 +1,5 @@
 from . import food
-from .forms import CreateRecipeForm, IngredientForm, MealPlannerForm, SearchForm
+from .forms import CreateRecipeForm, IngredientForm, MealPlannerForm, SearchForm, PantryForm
 from .models import Recipe, Ingredients, MyMealPlan
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
@@ -197,5 +197,15 @@ def mealPlanner():
 @login_required
 def pantry():
     title = "Pantry"
+    user_pantry = current_user.my_pantry.all()
+    pantryForm = PantryForm()
 
-    return render_template('pantry.html', title=title)
+    if pantryForm.validate_on_submit():
+        print('here')
+        for form in pantryForm.pantryItem:
+            amount = form.amount.data
+            ingredient = form.ingredient.data
+
+            print(amount, ingredient)
+
+    return render_template('pantry.html', title=title, pantryForm=pantryForm, user_pantry=user_pantry)
