@@ -44,8 +44,20 @@
         </div>
         <div class="col-12 col-sm-7 my-2">
             <div class="card p-2">
-                <p class="card-text">Pantry items go here</p>
-                
+                <div class="row p-2">
+                    <h2 class="card-title text-center">My Pantry</h2>
+                    <table class="table table-striped p-2">
+                        <tbody>
+                                {% for pantryItem in user_pantry %}
+                                    <tr class="shopping-list" onClick="this.classList.toggle('done')">
+                                        <th scope="row" class="card-text">{{ pantryItem.pantryAmount }}</th>
+                                        <td class="card-text">{{ pantryItem.pantryItem }}</td>
+                                        <td class="d-flex justify-content-end"><a href="{{ url_for('food.deletePantryItem', pantry_Id=pantryItem.id) }}" class="btn btn-danger" style="width: 50px;"><i class="fas fa-trash-alt"></i></a></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
             </div>
 
 

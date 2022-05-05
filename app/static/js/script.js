@@ -90,10 +90,11 @@
 }
 {
     pantryCounter = 0;
+
     function addPantryForm(){
         // Spot to append
         pantrySpot = document.getElementById('pantryItemForms');
-        // setCounter()
+        setCounter()
 
         // Bootstrap row and columns
         const row = document.createElement('div')
@@ -161,7 +162,18 @@
     };
 
     function removePantryForm(){
-
+        setCounter()
+        if (pantryCounter > 0){
+            pantryCounter--
+            lastRow = document.getElementById(`pantryItem row ${pantryCounter}`)
+            lastRow.remove()
+        }
     };
+
+    function setCounter(){
+        //Set the current counter to the number of children divs / 3 (3 child divs, 1 row 2 cols)
+        let pantryChildren = document.getElementById('pantryItemForms').getElementsByTagName('div').length;
+        pantryCounter = (pantryChildren / 3)
+    }
 
 }

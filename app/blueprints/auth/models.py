@@ -16,7 +16,7 @@ class User(db.Model, UserMixin):
     date_created = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
     my_recipes = db.relationship('Recipe', backref = 'author', lazy='dynamic')
     my_mealplan = db.relationship('MyMealPlan', backref='mymealplan', lazy='dynamic')
-    my_pantry = db.relationship('MyPantry', backref='mymealplan', lazy='dynamic')
+    my_pantry = db.relationship('MyPantry', backref='mypantry', lazy='dynamic')
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

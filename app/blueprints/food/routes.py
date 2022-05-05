@@ -1,6 +1,6 @@
 from . import food
 from .forms import CreateRecipeForm, IngredientForm, MealPlannerForm, SearchForm, PantryForm
-from .models import Recipe, Ingredients, MyMealPlan
+from .models import Recipe, Ingredients, MyMealPlan, MyPantry
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 from validators import url
@@ -206,6 +206,23 @@ def pantry():
             amount = form.amount.data
             ingredient = form.ingredient.data
 
-            print(amount, ingredient)
+            if ingredient:
+                newPantryItem = MyPantry(user_id = current_user.id, pantryItem = ingredient, pantryAmount = amount)
+            
+        return redirect(url_for('food.pantry'))
+            
 
     return render_template('pantry.html', title=title, pantryForm=pantryForm, user_pantry=user_pantry)
+
+@food.route('/deletePantryItem/<pantry_Id>')
+@login_required
+def deletePantryItem(pantry_Id):
+    pantryItem = MyPantry.query.get_or_404(pantry_Id)
+
+    if pantryItem.mypantry != current_user:
+        flash('You do not have access to delete this pantry entry. Goodbye.', 'danger')
+        return redirect(url_for('food.pantry'))
+
+    pantryItem.delete()
+    
+    return redirect(url_for('food.pantry'))
